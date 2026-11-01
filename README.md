@@ -31,4 +31,3 @@ Tokens are stored in `~/.papaya/session.json` next to a dedicated Chrome profile
 npm run typecheck
 npm run build
 ```
-
