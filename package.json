@@ -1,0 +1,38 @@
+{
+  "name": "papaya-cli",
+  "version": "0.1.0",
+  "description": "Unofficial CLI for Papaya Personal",
+  "type": "module",
+  "bin": {
+    "papaya-cli": "dist/papaya-cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsup && chmod +x dist/papaya-cli.js",
+    "start": "npm run build && node dist/papaya-cli.js",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "papaya",
+    "payslip",
+    "cli",
+    "unofficial"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  }
+}
