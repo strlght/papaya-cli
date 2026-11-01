@@ -49,6 +49,7 @@ export async function launchChrome(): Promise<number> {
       "--remote-debugging-address=127.0.0.1",
       "--no-first-run",
       "--no-default-browser-check",
+      "--no-startup-window",
     ],
     { stdio: "ignore", detached: true },
   );
