@@ -4,7 +4,7 @@ Not affiliated with Papaya Global Ltd; use at your own risk and in line with you
 
 Unofficial CLI for Papaya Personal: log in through Auth0 and list or download your payslips from the terminal.
 
-Requires Node >= 24 (zero runtime dependencies) and Google Chrome or Chromium for the assisted login.
+Requires Node >= 24 and Google Chrome or Chromium for the assisted login. The only runtime dependency is the OS keychain binding for token storage.
 
 ## Install
 
@@ -23,7 +23,9 @@ papaya-cli download [--out DIR]   save payslips (default dir: ./payslips)
 
 `download` takes `--payment ID` and `--period YYYY-MM` filters.
 
-Tokens are stored in `~/.papaya/session.json` next to a dedicated Chrome profile, and refresh automatically on later commands.
+Tokens are stored in the OS keychain under the `papaya-cli` service, and refresh automatically on later commands.
+
+If no keychain is reachable (e.g. headless Linux without Secret Service), they fall back to `~/.papaya/session.json` (mode 0600) with a warning.
 
 ## Development
 

@@ -13,6 +13,8 @@ export const APP_VERSION = "android_2.1.13";
 
 export const PAPAYA_DIR = join(homedir(), ".papaya");
 export const STORE = join(PAPAYA_DIR, "session.json");
+export const KEYRING_SERVICE = "papaya-cli";
+export const KEYRING_ACCOUNT = "session";
 export const CHROME_PROFILE = join(PAPAYA_DIR, "chrome-profile");
 
 export const CDP_PORTS = [9222, 9223, 9224];
