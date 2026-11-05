@@ -18,6 +18,7 @@
     "build": "tsup && chmod +x dist/papaya-cli.js",
     "start": "npm run build && node dist/papaya-cli.js",
     "typecheck": "tsc --noEmit",
+    "test": "tsup --config tsup.config.test.ts && node --test dist-test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "npm run build"
