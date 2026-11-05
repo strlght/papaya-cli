@@ -84,6 +84,15 @@ export async function loginBrowser(fresh = false): Promise<Auth0> {
     const {
       result: { sessionId },
     } = await cdp.send("Target.attachToTarget", { targetId, flatten: true });
+    const focus = (ms = 2000) =>
+      Promise.race([
+        Promise.all([
+          cdp.send("Target.activateTarget", { targetId }),
+          cdp.send("Page.bringToFront", {}, sessionId),
+        ]),
+        new Promise((r) => setTimeout(r, ms)),
+      ]);
+    await focus();
     await cdp.send(
       "Fetch.enable",
       {

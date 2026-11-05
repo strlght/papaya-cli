@@ -34,6 +34,11 @@ export function findChrome(): string | undefined {
   return existsSync(mac) ? mac : undefined;
 }
 
+export function chromeAppBundle(bin: string): string | undefined {
+  const i = bin.indexOf(".app/Contents/MacOS/");
+  return i > 0 ? bin.slice(0, i + ".app".length) : undefined;
+}
+
 export async function launchChrome(): Promise<number> {
   const bin = findChrome();
   if (!bin)
@@ -41,18 +46,17 @@ export async function launchChrome(): Promise<number> {
       `Chrome not found — set CHROME_BIN=/path/to/chrome (or run: ${cmdName()} login --paste)`,
     );
   mkdirSync(CHROME_PROFILE, { recursive: true, mode: 0o700 });
-  const child = spawn(
-    bin,
-    [
-      `--user-data-dir=${CHROME_PROFILE}`,
-      `--remote-debugging-port=${CDP_PORTS[0]}`,
-      "--remote-debugging-address=127.0.0.1",
-      "--no-first-run",
-      "--no-default-browser-check",
-      "--no-startup-window",
-    ],
-    { stdio: "ignore", detached: true },
-  );
+  const flags = [
+    `--user-data-dir=${CHROME_PROFILE}`,
+    `--remote-debugging-port=${CDP_PORTS[0]}`,
+    "--remote-debugging-address=127.0.0.1",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--no-startup-window",
+  ];
+  const bundle = process.platform === "darwin" ? chromeAppBundle(bin) : undefined;
+  const [cmd, args] = bundle ? ["open", ["-n", "-a", bundle, "--args", ...flags]] : [bin, flags];
+  const child = spawn(cmd, args, { stdio: "ignore", detached: true });
   child.unref();
   for (let i = 0; i < 20; i++) {
     await new Promise((r) => setTimeout(r, 500));
